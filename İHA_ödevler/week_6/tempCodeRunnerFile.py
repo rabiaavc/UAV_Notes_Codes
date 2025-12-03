@@ -1,0 +1,1 @@
+img = cv.imread("cicek.jpg")
