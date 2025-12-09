@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Async Chat</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+
+<h2>Async Chat</h2>
+
+<div id="chat"></div>
+
+<input id="msg" placeholder="Mesaj yaz...">
+<button onclick="gonder()">Gönder</button>
+
+<script>
+    const socket = io("http://localhost:5000");
+
+    socket.on("mesaj_yayinla", (data) => {
+        const div = document.getElementById("chat");
+        div.innerHTML += `<p><b>${data.user}:</b> ${data.mesaj}</p>`;
+    });
+
+    function gonder() {
+        const text = document.getElementById("msg").value;
+        socket.emit("mesaj_gonder", {
+            user: "Rabia",
+            mesaj: text
+        });
+        document.getElementById("msg").value = "";
+    }
+</script>
+
+</body>
+</html>
